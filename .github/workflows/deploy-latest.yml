@@ -1,0 +1,27 @@
+name: Deploy Latest Docker Image to Azure Web App
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - nme/pd2
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_RESOURCEGROUP_CONTRIBUTOR_SERVICEPRINICIPAL }}
+
+      - name: Deploy to Azure Web App (from ACR)
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          images: nmecr.azurecr.io/ipt-spins:latest

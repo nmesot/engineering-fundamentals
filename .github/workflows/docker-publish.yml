@@ -22,6 +22,17 @@ jobs:
           fetch-depth: 0
 
       - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2.2.0
+        with:
+          args: >
+            -Dsonar.projectKey=engineering-fundamentals
+            -Dsonar.organization=Nicolas Mesot
+            -Dsonar.sources=.
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: SonarCloud Scan
         run: echo "** TASK D.1 - Replace this step with your SonarCloud analysis command (using SonarSource/sonarcloud-github-action@v2.2.0) **"
         # Hints:
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Provided by GitHub Actions
